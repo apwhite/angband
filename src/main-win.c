@@ -5111,6 +5111,13 @@ int FAR PASCAL WinMain(HINSTANCE hInst, HINSTANCE hPrevInst,
 #ifdef USE_SAVER
 	if (screensaver)
 	{
+		/* Set command hook (apw)*/
+		cmd_get_hook = win_get_cmd;
+
+		/* Set up the display handlers and things. (apw)*/
+		init_display();
+		initialized = TRUE;
+
 		/* Start the screensaver */
 		start_screensaver();
 
