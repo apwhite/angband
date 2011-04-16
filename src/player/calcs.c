@@ -74,8 +74,9 @@ const byte adj_chr_gold[STAT_RANGE] =
 
 /*
  * Stat Table (INT) -- Magic devices
+ * apw -- screensaver needs extern 
  */
-static const byte adj_int_dev[STAT_RANGE] =
+extern const byte adj_int_dev[STAT_RANGE] =
 {
 	0	/* 3 */,
 	0	/* 4 */,
@@ -119,8 +120,9 @@ static const byte adj_int_dev[STAT_RANGE] =
 
 /*
  * Stat Table (WIS) -- Saving throw
+ * apw -- screensaver needs extern 
  */
-static const byte adj_wis_sav[STAT_RANGE] =
+extern const byte adj_wis_sav[STAT_RANGE] =
 {
 	0	/* 3 */,
 	0	/* 4 */,
@@ -165,8 +167,9 @@ static const byte adj_wis_sav[STAT_RANGE] =
 
 /*
  * Stat Table (DEX) -- disarming
+ * apw -- screensaver needs extern 
  */
-static const byte adj_dex_dis[STAT_RANGE] =
+extern const byte adj_dex_dis[STAT_RANGE] =
 {
 	0	/* 3 */,
 	0	/* 4 */,
@@ -211,8 +214,9 @@ static const byte adj_dex_dis[STAT_RANGE] =
 
 /*
  * Stat Table (INT) -- disarming
+ * apw -- screensaver needs extern 
  */
-static const byte adj_int_dis[STAT_RANGE] =
+extern const byte adj_int_dis[STAT_RANGE] =
 {
 	0	/* 3 */,
 	0	/* 4 */,
@@ -256,8 +260,9 @@ static const byte adj_int_dis[STAT_RANGE] =
 
 /*
  * Stat Table (DEX) -- bonus to ac (plus 128)
+ * apw -- screensaver needs extern 
  */
-static const byte adj_dex_ta[STAT_RANGE] =
+extern const byte adj_dex_ta[STAT_RANGE] =
 {
 	128 + -4	/* 3 */,
 	128 + -3	/* 4 */,
@@ -301,8 +306,9 @@ static const byte adj_dex_ta[STAT_RANGE] =
 
 /*
  * Stat Table (STR) -- bonus to dam (plus 128)
+ * apw -- screensaver needs extern 
  */
-static const byte adj_str_td[STAT_RANGE] =
+extern const byte adj_str_td[STAT_RANGE] =
 {
 	128 + -2	/* 3 */,
 	128 + -2	/* 4 */,
@@ -347,8 +353,9 @@ static const byte adj_str_td[STAT_RANGE] =
 
 /*
  * Stat Table (DEX) -- bonus to hit (plus 128)
+ * apw -- screensaver needs extern 
  */
-static const byte adj_dex_th[STAT_RANGE] =
+extern const byte adj_dex_th[STAT_RANGE] =
 {
 	128 + -3	/* 3 */,
 	128 + -2	/* 4 */,
@@ -393,8 +400,9 @@ static const byte adj_dex_th[STAT_RANGE] =
 
 /*
  * Stat Table (STR) -- bonus to hit (plus 128)
+ * apw -- screensaver needs extern 
  */
-static const byte adj_str_th[STAT_RANGE] =
+extern const byte adj_str_th[STAT_RANGE] =
 {
 	128 + -3	/* 3 */,
 	128 + -2	/* 4 */,
@@ -439,8 +447,9 @@ static const byte adj_str_th[STAT_RANGE] =
 
 /*
  * Stat Table (STR) -- weight limit in deca-pounds
+ * apw -- screensaver needs extern 
  */
-static const byte adj_str_wgt[STAT_RANGE] =
+extern const byte adj_str_wgt[STAT_RANGE] =
 {
 	5	/* 3 */,
 	6	/* 4 */,
@@ -485,8 +494,9 @@ static const byte adj_str_wgt[STAT_RANGE] =
 
 /*
  * Stat Table (STR) -- weapon weight limit in pounds
+ * apw -- screensaver needs extern 
  */
-const byte adj_str_hold[STAT_RANGE] =
+extern byte adj_str_hold[STAT_RANGE] =
 {
 	4	/* 3 */,
 	5	/* 4 */,
@@ -531,8 +541,9 @@ const byte adj_str_hold[STAT_RANGE] =
 
 /*
  * Stat Table (STR) -- digging value
+ * apw -- screensaver needs extern 
  */
-static const byte adj_str_dig[STAT_RANGE] =
+extern const byte adj_str_dig[STAT_RANGE] =
 {
 	0	/* 3 */,
 	0	/* 4 */,
@@ -577,8 +588,9 @@ static const byte adj_str_dig[STAT_RANGE] =
 
 /*
  * Stat Table (STR) -- help index into the "blow" table
+ * apw -- screensaver needs extern 
  */
-const byte adj_str_blow[STAT_RANGE] =
+extern byte adj_str_blow[STAT_RANGE] =
 {
 	3	/* 3 */,
 	4	/* 4 */,
@@ -623,8 +635,9 @@ const byte adj_str_blow[STAT_RANGE] =
 
 /*
  * Stat Table (DEX) -- index into the "blow" table
+ * apw -- screensaver needs extern 
  */
-static const byte adj_dex_blow[STAT_RANGE] =
+extern const byte adj_dex_blow[STAT_RANGE] =
 {
 	0	/* 3 */,
 	0	/* 4 */,
@@ -761,8 +774,9 @@ const byte adj_con_fix[STAT_RANGE] =
 
 /*
  * Stat Table (CON) -- extra 1/100th hitpoints per level
- */
-static const int adj_con_mhp[STAT_RANGE] =
+ * apw -- screensaver needs extern 
+*/
+extern const int adj_con_mhp[STAT_RANGE] =
 {
 	-250	/* 3 */,
 	-150	/* 4 */,
