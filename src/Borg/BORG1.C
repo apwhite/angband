@@ -12,6 +12,7 @@
 /* Date of the last change */
 char borg_engine_date[] = __DATE__;
 
+
 /*
  * Borg information, ScreenSaver or continual play mode;
  */
@@ -1942,7 +1943,7 @@ void borg_update_frame(void)
 	/* A quick cheat to see if I missed a message about my status on some timed spells */
     if (!goal_recalling && p_ptr->word_recall ) goal_recalling = TRUE;
     if (!borg_prot_from_evil && p_ptr->timed[TMD_PROTEVIL]) borg_prot_from_evil = (p_ptr->timed[TMD_PROTEVIL] ? TRUE : FALSE);
-	if (!borg_speed && (p_ptr->timed[TMD_FAST] || p_ptr->timed[TMD_SPRINT] || p_ptr->timed[TMD_TERROR])) 
+	if (!borg_speed && (p_ptr->timed[TMD_FAST] || p_ptr->timed[TMD_SPRINT] || p_ptr->timed[TMD_TERROR]))
 		(borg_speed = (p_ptr->timed[TMD_FAST] || p_ptr->timed[TMD_SPRINT] || p_ptr->timed[TMD_TERROR]) ? TRUE : FALSE);
     if (!my_oppose_acid && p_ptr->timed[TMD_OPP_ACID]) my_oppose_acid = (p_ptr->timed[TMD_OPP_ACID] ? TRUE : FALSE);
     if (!my_oppose_elec && p_ptr->timed[TMD_OPP_ELEC]) my_oppose_elec = (p_ptr->timed[TMD_OPP_ELEC] ? TRUE : FALSE);
