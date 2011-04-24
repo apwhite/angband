@@ -105,7 +105,7 @@ extern term *angband_term[ANGBAND_TERM_MAX];
 extern char angband_term_name[ANGBAND_TERM_MAX][16];
 extern byte angband_color_table[MAX_COLORS][4];
 extern color_type color_table[MAX_COLORS];
-extern const const char *angband_sound_name[MSG_MAX];
+extern const char *angband_sound_name[MSG_MAX];
 extern int view_n;
 extern u16b *view_g;
 extern int temp_n;

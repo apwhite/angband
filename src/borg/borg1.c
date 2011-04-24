@@ -12,7 +12,6 @@
 /* Date of the last change */
 char borg_engine_date[] = __DATE__;
 
-
 /*
  * Borg information, ScreenSaver or continual play mode;
  */
