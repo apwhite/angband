@@ -388,36 +388,36 @@ static void recharge_objects(void)
 static void play_ambient_sound(void)
 {
 	/* Town sound */
-	if (p_ptr->depth == 0) 
+	if (p_ptr->depth == 0)
 	{
 		/* Hack - is it daytime or nighttime? */
 		if (turn % (10L * TOWN_DAWN) < TOWN_DAWN / 2)
 		{
 			/* It's day. */
 			sound(MSG_AMBIENT_DAY);
-		} 
-		else 
+		}
+		else
 		{
 			/* It's night. */
 			sound(MSG_AMBIENT_NITE);
 		}
-		
+
 	}
 
 	/* Dungeon level 1-20 */
-	else if (p_ptr->depth <= 20) 
+	else if (p_ptr->depth <= 20)
 	{
 		sound(MSG_AMBIENT_DNG1);
 	}
 
 	/* Dungeon level 21-40 */
-	else if (p_ptr->depth <= 40) 
+	else if (p_ptr->depth <= 40)
 	{
 		sound(MSG_AMBIENT_DNG2);
 	}
 
 	/* Dungeon level 41-60 */
-	else if (p_ptr->depth <= 60) 
+	else if (p_ptr->depth <= 60)
 	{
 		sound(MSG_AMBIENT_DNG3);
 	}
@@ -935,7 +935,7 @@ static void process_player(void)
 				disturb(p_ptr, 0, 0);
 			}
 		}
-		
+
 		/* Rest until HP or SP are filled */
 		else if (p_ptr->resting == REST_SOME_POINTS)
 		{
@@ -947,7 +947,7 @@ static void process_player(void)
 			}
 		}
 	}
-
+#ifndef ALLOW_BORG
 	/* Check for "player abort" */
 	if (p_ptr->running ||
 	    cmd_get_nrepeats() > 0 ||
@@ -967,7 +967,7 @@ static void process_player(void)
 			msg("Cancelled.");
 		}
 	}
-
+#endif
 
 	/*** Handle actual user input ***/
 
@@ -1024,7 +1024,7 @@ static void process_player(void)
 			if (p_ptr->energy_use > 100)
 				p_ptr->energy_use = 100;
 			p_ptr->notice &= ~(PN_PICKUP);
-			
+
 			/* Appropriate time for the player to see objects */
 			event_signal(EVENT_SEEFLOOR);
 		}
@@ -1082,7 +1082,7 @@ static void process_player(void)
 			process_command(CMD_GAME, FALSE);
 
 			/* Mega hack - redraw if big graphics - sorry NRM */
-			if ((tile_width > 1) || (tile_height > 1)) 
+			if ((tile_width > 1) || (tile_height > 1))
 			        p_ptr->redraw |= (PR_MAP);
 		}
 
@@ -1150,7 +1150,7 @@ static void process_player(void)
 }
 
 byte flicker = 0;
-byte color_flicker[MAX_COLORS][3] = 
+byte color_flicker[MAX_COLORS][3] =
 {
 	{TERM_DARK, TERM_L_DARK, TERM_L_RED},
 	{TERM_WHITE, TERM_L_WHITE, TERM_L_BLUE},
@@ -1293,7 +1293,7 @@ static void dungeon(struct cave *c)
 	if (p_ptr->autosave)
 	{
 /* The borg runs so quickly that this is a bad idea. */
-#ifndef ALLOW_BORG 
+#ifndef ALLOW_BORG
 		save_game();
 #endif
 		p_ptr->autosave = FALSE;
@@ -1408,7 +1408,7 @@ static void dungeon(struct cave *c)
 		while ((p_ptr->energy >= 100) && !p_ptr->leaving)
 		{
     		/* Do any necessary animations */
-    		do_animation(); 
+    		do_animation();
 
 			/* process monster with even more energy first */
 			process_monsters(c, (byte)(p_ptr->energy + 1));
@@ -1417,7 +1417,7 @@ static void dungeon(struct cave *c)
 			if (!p_ptr->leaving)
 			{
 			        /* Mega hack -redraw big graphics - sorry NRM */
-			        if ((tile_width > 1) || (tile_height > 1)) 
+			        if ((tile_width > 1) || (tile_height > 1))
 				        p_ptr->redraw |= (PR_MAP);
 
 				/* Process the player */
@@ -1487,7 +1487,7 @@ static void dungeon(struct cave *c)
 		for (i = cave_monster_max(cave) - 1; i >= 1; i--)
 		{
 			int mspeed;
-			
+
 			/* Access the monster */
 			m_ptr = cave_monster(cave, i);
 

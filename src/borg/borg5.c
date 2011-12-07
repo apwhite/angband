@@ -1121,7 +1121,7 @@ static void borg_update_kill_new(int i)
 	/* Hack -- Force the monster to be sitting on a floor
 	 * grid unless that monster can pass through walls
 	 */
-    if (!rf_has(r_ptr->flags, RF_PASS_WALL))
+    if (borg_grids[kill->y][kill->x].feat == FEAT_NONE && !rf_has(r_ptr->flags, RF_PASS_WALL))
     {
 		borg_grids[kill->y][kill->x].feat = FEAT_FLOOR;
 	}
@@ -1129,7 +1129,7 @@ static void borg_update_kill_new(int i)
 	/* Hack -- Force the ghostly monster to be in a wall
 	 * grid until the grid is proven to be something else
 	 */
-    if (rf_has(r_ptr->flags, RF_PASS_WALL))
+    if (borg_grids[kill->y][kill->x].feat == FEAT_NONE && rf_has(r_ptr->flags, RF_PASS_WALL))
     {
 		borg_grids[kill->y][kill->x].feat = FEAT_WALL_EXTRA;
 	}
@@ -1264,7 +1264,7 @@ static void borg_update_kill_old(int i)
 	/* Hack -- Force the monster to be sitting on a floor
 	 * grid unless that monster can pass through walls
 	 */
-	if (!rf_has(r_ptr->flags, RF_PASS_WALL))
+	if (borg_grids[kill->y][kill->x].feat == FEAT_NONE && !rf_has(r_ptr->flags, RF_PASS_WALL))
 	{
 		borg_grids[kill->y][kill->x].feat = FEAT_FLOOR;
 	}
@@ -1272,7 +1272,7 @@ static void borg_update_kill_old(int i)
 	/* Hack -- Force the ghostly monster to be in a wall
 	 * grid until the grid is proven to be something else
 	 */
-	if (rf_has(r_ptr->flags, RF_PASS_WALL))
+	if (borg_grids[kill->y][kill->x].feat == FEAT_NONE && rf_has(r_ptr->flags, RF_PASS_WALL))
 	{
 		borg_grids[kill->y][kill->x].feat = FEAT_WALL_EXTRA;
 	}
@@ -1684,9 +1684,9 @@ static int borg_new_kill(int r_idx, int y, int x)
     borg_update_kill_old(n);
 
     /* Note (r_info[kill->r_idx].name)*/
-    borg_note(format("# Creating a monster '%s' at (%d,%d), HP: %d, Time: %d, Index: %d",
+	borg_note(format("# Creating a monster '%s' at (%d,%d), HP: %d, Time: %d, Index: %d, Danger: %d",
                      (r_info[kill->r_idx].name),
-                     kill->y, kill->x, kill->power, kill->when, kill->r_idx));
+                     kill->y, kill->x, kill->power, kill->when, kill->r_idx, p));
 
     /* Recalculate danger */
     borg_danger_wipe = TRUE;
@@ -1729,7 +1729,7 @@ static int borg_new_kill(int r_idx, int y, int x)
 	/* Hack -- Force the monster to be sitting on a floor
 	 * grid unless that monster can pass through walls
 	 */
-    if (!(rf_has(r_ptr->flags, RF_PASS_WALL)))
+    if (borg_grids[kill->y][kill->x].feat == FEAT_NONE && !(rf_has(r_ptr->flags, RF_PASS_WALL)))
     {
 		ag->feat = FEAT_FLOOR;
 	}
@@ -1737,7 +1737,7 @@ static int borg_new_kill(int r_idx, int y, int x)
 	/* Hack -- Force the ghostly monster to be in a wall
 	 * grid until the grid is proven to be something else
 	 */
-    if (rf_has(r_ptr->flags, RF_PASS_WALL))
+    if (borg_grids[kill->y][kill->x].feat == FEAT_NONE && rf_has(r_ptr->flags, RF_PASS_WALL))
     {
 		ag->feat = FEAT_WALL_EXTRA;
 	}
@@ -2744,6 +2744,11 @@ static int borg_locate_kill(cptr who, int y, int x, int r)
 
 	        /* Distance away */
 	        d = distance(kill->y, kill->x, y, x);
+
+			/* Hopefully this will add fear to our grid */
+			if (!borg_los(kill->y,kill->x, c_y, c_x) &&
+				!borg_projectable_dark(kill->y, kill->x, c_y, c_x) &&
+				!borg_projectable(kill->y, kill->x, c_y, c_x)) continue;
 
 	        /* Check distance */
 	        /* Note:
@@ -4511,7 +4516,7 @@ void borg_update(void)
 			borg_nasties_count[i] = 0;
 
 			/* Assume there are some Hounds on the Level */
-			if (borg_nasties[i] == 'Z') borg_nasties_count[i] = 25; /* Assume some on level */
+			if (borg_nasties[i] == 'Z' && borg_skill[BI_CDEPTH] >= 75) borg_nasties_count[i] = 25; /* Assume some on level */
 		}
 
         /* Forget old monsters */
@@ -5449,6 +5454,7 @@ void borg_init_5(void)
 
     s16b what[1024];
     char* text[1024];
+	char s[1024];
 
 
     /*** Message tracking ***/
@@ -5523,8 +5529,14 @@ void borg_init_5(void)
     C_MAKE(borg_unique_what, borg_unique_size, s16b);
 
     /* Save the entries */
-    for (i = 0; i < size; i++) borg_unique_text[i] = text[i];
-    for (i = 0; i < size; i++) borg_unique_what[i] = what[i];
+    for (i = 0; i < size; i++)
+	{
+ 		/* Translate it to 7-bit ASCII or system-specific format LATIN1*/
+ 		xstr_trans(text[i], LATIN1);
+
+		borg_unique_text[i] = text[i];
+		borg_unique_what[i] = what[i];
+	}
 
 
     /*** Parse "normal" monster names ***/

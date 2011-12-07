@@ -6,7 +6,7 @@
 #if (!defined(HAVE_STDINT_H))
 /* MSVC doesn't have stdint.h (which is C99), so we'll just
  * create the right pointer manually. */
-typedef unsigned int * uintptr_t;
+//typedef unsigned int * uintptr_t;
 #endif
 
 struct queue {

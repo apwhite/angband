@@ -99,6 +99,7 @@ bool player_can_study_book(void)
 {
 	int item_list[INVEN_TOTAL];
 	int item_num;
+	int i;
 
 	object_type *o_ptr;
 	struct spell *sp;
@@ -116,7 +117,7 @@ bool player_can_study_book(void)
 	item_num = scan_items(item_list, N_ELEMENTS(item_list), (USE_INVEN));
 
 	/* Check through all available books */
-	for (int i = 0; i < item_num; i++)
+	for (i = 0; i < item_num; i++)
 	{
 		o_ptr = object_from_item_idx(i);
 

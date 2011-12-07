@@ -1901,7 +1901,7 @@ static void borg_parse_aux(cptr msg, int len)
     }
 
     /* Wearing Cursed Item */
-    if ((prefix(msg, "Oops! It feels deathly cold!")) ||
+    if ((prefix(msg, "It feels deathly cold!")) ||
         (suffix(msg, " seems to be cursed.")) ||
         (suffix(msg, " appears to be cursed.")))
     {
@@ -2182,7 +2182,8 @@ static void borg_parse_aux(cptr msg, int len)
 
     /* Shield */
     if (prefix(msg, "A mystic shield forms around your body!") ||
-		prefix(msg, "Your skin turns to stone."))
+		prefix(msg, "Your skin turns to stone.") ||
+		prefix(msg, "The mystic shield strengthens."))
     {
         borg_shield = TRUE;
         return;
@@ -3060,7 +3061,7 @@ void resurrect_borg(void)
 
     /*** Wipe the player ***/
 	player_init(p_ptr);
-
+	history_clear();
 	borg_skill[BI_ISCUT] = borg_skill[BI_ISSTUN] = borg_skill[BI_ISHEAVYSTUN] = borg_skill[BI_ISIMAGE] = borg_skill[BI_ISSTUDY] = FALSE;
 
     /* reset our panel clock */
@@ -3201,6 +3202,7 @@ void resurrect_borg(void)
     borg_skill[BI_TRPOIS] = (p_ptr->timed[TMD_OPP_POIS] ? TRUE : FALSE);
     borg_bless = (p_ptr->timed[TMD_BLESSED] ? TRUE : FALSE);
     borg_shield = (p_ptr->timed[TMD_SHIELD] ? TRUE : FALSE);
+    borg_stone = (p_ptr->timed[TMD_STONESKIN] ? TRUE : FALSE);
     borg_hero = (p_ptr->timed[TMD_HERO] ? TRUE : FALSE);
     borg_berserk = (p_ptr->timed[TMD_SHERO] ? TRUE : FALSE);
     if (p_ptr->timed[TMD_SINVIS]) borg_see_inv = 10000;
@@ -5120,7 +5122,7 @@ void borg_write_map(bool ask)
     for (i = 0; i < 12; i++)
     {
         object_desc(o_name, sizeof(o_name), &st_ptr->stock[i], ODESC_FULL);
-        file_putf(borg_map_file, "%c) %s\n", I2A(i%12), o_name);
+        file_putf(borg_map_file, "%c) %d %s\n", I2A(i%12), st_ptr->stock[i].number, o_name);
     }
     file_putf(borg_map_file, "\n\n");
 
@@ -5129,7 +5131,7 @@ void borg_write_map(bool ask)
     for (i = 12; i < 24; i++)
     {
         object_desc(o_name, sizeof(o_name), &st_ptr->stock[i], ODESC_FULL);
-        file_putf(borg_map_file, "%c) %s\n", I2A(i%12), o_name);
+        file_putf(borg_map_file, "%c) %d %s\n", I2A(i%12), st_ptr->stock[i].number, o_name);
     }
     file_putf(borg_map_file, "\n\n");
 
@@ -5791,7 +5793,7 @@ void borg_status(void)
    else attr = TERM_SLATE;
    Term_putstr(28, 3, -1, attr, "Berserk");
 
-   if (borg_shield) attr = TERM_WHITE;
+   if (borg_shield || borg_stone) attr = TERM_WHITE;
    else attr = TERM_SLATE;
    Term_putstr(28, 4, -1, attr, "Shielded");
 
@@ -6105,6 +6107,7 @@ void do_cmd_borg(void)
 		    borg_skill[BI_TRCOLD] = (p_ptr->timed[TMD_OPP_COLD] ? TRUE : FALSE);
 		    borg_skill[BI_TRPOIS] = (p_ptr->timed[TMD_OPP_POIS] ? TRUE : FALSE);
 		    borg_bless = (p_ptr->timed[TMD_BLESSED] ? TRUE : FALSE);
+		    borg_stone = (p_ptr->timed[TMD_STONESKIN] ? TRUE : FALSE);
 		    borg_shield = (p_ptr->timed[TMD_SHIELD] ? TRUE : FALSE);
 		    borg_hero = (p_ptr->timed[TMD_HERO] ? TRUE : FALSE);
 		    borg_berserk = (p_ptr->timed[TMD_SHERO] ? TRUE : FALSE);
@@ -6151,6 +6154,7 @@ void do_cmd_borg(void)
 		    borg_skill[BI_TRPOIS] = (p_ptr->timed[TMD_OPP_POIS] ? TRUE : FALSE);
 		    borg_bless = (p_ptr->timed[TMD_BLESSED] ? TRUE : FALSE);
 		    borg_shield = (p_ptr->timed[TMD_SHIELD] ? TRUE : FALSE);
+		    borg_stone = (p_ptr->timed[TMD_STONESKIN] ? TRUE : FALSE);
 		    borg_hero = (p_ptr->timed[TMD_HERO] ? TRUE : FALSE);
 		    borg_berserk = (p_ptr->timed[TMD_SHERO] ? TRUE : FALSE);
 		    if (p_ptr->timed[TMD_SINVIS]) borg_see_inv = 10000;
@@ -6198,6 +6202,7 @@ void do_cmd_borg(void)
 		    borg_skill[BI_TRPOIS] = (p_ptr->timed[TMD_OPP_POIS] ? TRUE : FALSE);
 		    borg_bless = (p_ptr->timed[TMD_BLESSED] ? TRUE : FALSE);
 		    borg_shield = (p_ptr->timed[TMD_SHIELD] ? TRUE : FALSE);
+		    borg_stone = (p_ptr->timed[TMD_STONESKIN] ? TRUE : FALSE);
 		    borg_hero = (p_ptr->timed[TMD_HERO] ? TRUE : FALSE);
 		    borg_berserk = (p_ptr->timed[TMD_SHERO] ? TRUE : FALSE);
 		    if (p_ptr->timed[TMD_SINVIS]) borg_see_inv = 10000;
